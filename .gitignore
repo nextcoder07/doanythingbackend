@@ -1,0 +1,51 @@
+# Environment files & secrets (NEVER commit secrets to Git)
+.env
+*.env
+*.env.local
+backend/.env
+*credentials*.json
+service_account.json
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+venv/
+.venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Android & Gradle
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+android/*.iml
+android/*/*.iml
+.gradle/
+Captures/
+.externalNativeBuild/
+.cxx/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+Desktop.ini

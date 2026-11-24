@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Essential permissions only -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- No broad QUERY_ALL_PACKAGES. Package queries scoped to standard browsers for demo URLs -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="http" />
+        </intent>
+    </queries>
+
+    <application
+        android:name=".HakdaarApplication"
+        android:allowBackup="false"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:label="@string/app_name"
+        android:roundIcon="@android:drawable/ic_dialog_info"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar"
+        android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Compact visible activity for explicit user-controlled audio recording -->
+        <activity
+            android:name=".VoiceCaptureActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Hakdaar Accessibility Service providing TYPE_ACCESSIBILITY_OVERLAY and node actions -->
+        <service
+            android:name=".platform.accessibility.HakdaarAccessibilityService"
+            android:exported="false"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+    </application>
+
+</manifest>

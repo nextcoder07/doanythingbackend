@@ -1,0 +1,235 @@
+{
+  "catalogVersion": 1,
+  "tasks": [
+    {
+      "id": "birth_certificate_demo",
+      "title": "Birth Certificate Application (Demo)",
+      "description": "Practice completing a sample birth certificate form.",
+      "localeAliases": [
+        "birth certificate",
+        "janam praman patra",
+        "meri beti ka birth certificate",
+        "janm praman patra",
+        "birth form"
+      ],
+      "target": {
+        "kind": "https",
+        "urlPath": "/demo/birth-certificate",
+        "expectedHostMode": "hakdaar_demo_host"
+      },
+      "documentChecklist": [
+        "Hospital discharge summary or birth notification letter",
+        "Parent identity cards (Aadhaar, Voter ID, or Passport)",
+        "Proof of address (Electricity bill, Ration card, or Rent agreement)",
+        "Example identity/address documents may be required by a real authority; requirements vary by location."
+      ],
+      "fields": [
+        {
+          "id": "child_name",
+          "label": "Child's full name",
+          "type": "TEXT",
+          "required": true,
+          "sensitive": false,
+          "handoverOnly": false,
+          "format": "Preserve the name as spoken; user confirms spelling."
+        },
+        {
+          "id": "date_of_birth",
+          "label": "Child's date of birth",
+          "type": "DATE_TEXT",
+          "required": true,
+          "sensitive": false,
+          "handoverOnly": false,
+          "format": "DD-MM-YYYY"
+        },
+        {
+          "id": "place_of_birth",
+          "label": "Place of birth",
+          "type": "TEXT",
+          "required": true,
+          "sensitive": false,
+          "handoverOnly": false,
+          "format": "Preserve the location as spoken."
+        },
+        {
+          "id": "father_name",
+          "label": "Father's full name",
+          "type": "TEXT",
+          "required": true,
+          "sensitive": false,
+          "handoverOnly": false,
+          "format": "Preserve the name as spoken; user confirms spelling."
+        },
+        {
+          "id": "mother_name",
+          "label": "Mother's full name",
+          "type": "TEXT",
+          "required": true,
+          "sensitive": false,
+          "handoverOnly": false,
+          "format": "Preserve the name as spoken; user confirms spelling."
+        }
+      ],
+      "pages": [
+        {
+          "id": "birth_details",
+          "pageSignature": {
+            "headingExact": "Birth Certificate — Demo Form",
+            "requiredVisibleLabels": [
+              "Child's full name",
+              "Date of birth",
+              "Place of birth",
+              "Father's full name",
+              "Mother's full name"
+            ]
+          },
+          "fieldsInOrder": [
+            "child_name",
+            "date_of_birth",
+            "place_of_birth",
+            "father_name",
+            "mother_name"
+          ],
+          "selectors": {
+            "child_name": {
+              "labelExact": "Child's full name",
+              "inputType": "TEXT"
+            },
+            "date_of_birth": {
+              "labelExact": "Date of birth",
+              "inputType": "DATE_TEXT"
+            },
+            "place_of_birth": {
+              "labelExact": "Place of birth",
+              "inputType": "TEXT"
+            },
+            "father_name": {
+              "labelExact": "Father's full name",
+              "inputType": "TEXT"
+            },
+            "mother_name": {
+              "labelExact": "Mother's full name",
+              "inputType": "TEXT"
+            }
+          },
+          "navigationInstruction": "After all listed fields are complete, review the page and tap the demo Submit button yourself."
+        }
+      ]
+    },
+    {
+      "id": "widow_pension_demo",
+      "title": "Widow Pension Application (Demo)",
+      "description": "Practice completing a sample pension form. This is not a real application.",
+      "localeAliases": [
+        "widow pension",
+        "pension ke liye apply karna hai",
+        "पति के निधन के बाद पेंशन",
+        "vidhwa pension",
+        "pension application"
+      ],
+      "target": {
+        "kind": "https",
+        "urlPath": "/demo/widow-pension",
+        "expectedHostMode": "hakdaar_demo_host"
+      },
+      "documentChecklist": [
+        "Spouse's death certificate",
+        "Applicant's age/identity proof",
+        "Income/BPL certificate (if applicable in your state)",
+        "Example documents only; actual eligibility and document requirements vary by state and scheme."
+      ],
+      "fields": [
+        {
+          "id": "applicant_name",
+          "label": "Applicant's full name",
+          "type": "TEXT",
+          "required": true,
+          "sensitive": false,
+          "handoverOnly": false,
+          "format": "Preserve the name as spoken; user confirms spelling."
+        },
+        {
+          "id": "spouse_name",
+          "label": "Spouse's full name",
+          "type": "TEXT",
+          "required": true,
+          "sensitive": false,
+          "handoverOnly": false,
+          "format": "Preserve the name as spoken; user confirms spelling."
+        },
+        {
+          "id": "date_of_death",
+          "label": "Date of death",
+          "type": "DATE_TEXT",
+          "required": true,
+          "sensitive": false,
+          "handoverOnly": false,
+          "format": "DD-MM-YYYY"
+        },
+        {
+          "id": "district",
+          "label": "District",
+          "type": "TEXT",
+          "required": true,
+          "sensitive": false,
+          "handoverOnly": false,
+          "format": "Preserve as spoken."
+        },
+        {
+          "id": "address",
+          "label": "Current address",
+          "type": "TEXT",
+          "required": true,
+          "sensitive": false,
+          "handoverOnly": false,
+          "format": "Preserve as spoken."
+        }
+      ],
+      "pages": [
+        {
+          "id": "widow_pension_details",
+          "pageSignature": {
+            "headingExact": "Widow Pension — Demo Form",
+            "requiredVisibleLabels": [
+              "Applicant's full name",
+              "Spouse's full name",
+              "Date of death",
+              "District",
+              "Current address"
+            ]
+          },
+          "fieldsInOrder": [
+            "applicant_name",
+            "spouse_name",
+            "date_of_death",
+            "district",
+            "address"
+          ],
+          "selectors": {
+            "applicant_name": {
+              "labelExact": "Applicant's full name",
+              "inputType": "TEXT"
+            },
+            "spouse_name": {
+              "labelExact": "Spouse's full name",
+              "inputType": "TEXT"
+            },
+            "date_of_death": {
+              "labelExact": "Date of death",
+              "inputType": "DATE_TEXT"
+            },
+            "district": {
+              "labelExact": "District",
+              "inputType": "TEXT"
+            },
+            "address": {
+              "labelExact": "Current address",
+              "inputType": "TEXT"
+            }
+          },
+          "navigationInstruction": "After all listed fields are complete, review the page and tap the demo Submit button yourself."
+        }
+      ]
+    }
+  ]
+}

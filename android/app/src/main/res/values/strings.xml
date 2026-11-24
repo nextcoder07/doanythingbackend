@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hakdaar</string>
+    <string name="accessibility_service_description">Hakdaar is a voice co-pilot that helps you fill public forms step-by-step. It reads only field labels and types when a task starts, and fills fields only with your explicit confirmation. Hakdaar never reads or fills passwords, OTPs, PINs, or payments, and never presses Submit.</string>
+</resources>

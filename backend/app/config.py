@@ -11,9 +11,11 @@ class Settings(BaseSettings):
     )
 
     GCP_PROJECT_ID: str = ""
+    STT_PROVIDER: str = "google"
     STT_LOCATION: str = "asia-southeast1"
     STT_MODEL: str = "chirp_2"
     STT_API_KEY: str = ""
+    OPENAI_API_KEY: str = ""
     GOOGLE_APPLICATION_CREDENTIALS: str = ""
     GEMINI_MODEL_ID: str = "gemini-3.8-flash"
     GEMINI_API_KEY: str = ""

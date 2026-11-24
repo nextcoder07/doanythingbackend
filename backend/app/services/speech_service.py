@@ -1,5 +1,6 @@
 import io
 import wave
+import httpx
 from fastapi import HTTPException
 from app.config import settings
 
@@ -36,21 +37,74 @@ def validate_wav_audio(audio_bytes: bytes) -> None:
     except wave.Error as e:
         raise HTTPException(status_code=400, detail=f"Invalid WAV format: {str(e)}")
 
+def transcribe_audio_openai(audio_bytes: bytes, language_code: str) -> str:
+    """
+    Transcribes audio using OpenAI Whisper (whisper-1).
+    Supports Hindi ('hi') and Indian English ('en').
+    """
+    if not settings.OPENAI_API_KEY:
+        raise HTTPException(
+            status_code=503,
+            detail="OPENAI_CONFIG_BLOCKER: OPENAI_API_KEY is not configured in backend environment."
+        )
+
+    lang = "hi" if language_code.startswith("hi") else "en"
+    model = settings.STT_MODEL if "whisper" in settings.STT_MODEL else "whisper-1"
+
+    files = {
+        "file": ("audio.wav", audio_bytes, "audio/wav")
+    }
+    data = {
+        "model": model,
+        "language": lang
+    }
+    headers = {
+        "Authorization": f"Bearer {settings.OPENAI_API_KEY}"
+    }
+
+    try:
+        with httpx.Client(timeout=35.0) as client:
+            resp = client.post(
+                "https://api.openai.com/v1/audio/transcriptions",
+                headers=headers,
+                data=data,
+                files=files
+            )
+
+            if resp.status_code != 200:
+                raise HTTPException(
+                    status_code=502,
+                    detail=f"OPENAI_STT_ERROR: OpenAI Whisper returned HTTP {resp.status_code}: {resp.text}"
+                )
+
+            result = resp.json()
+            transcript = result.get("text", "").strip()
+            if not transcript:
+                raise HTTPException(
+                    status_code=422,
+                    detail="SPEECH_RECOGNITION_EMPTY: No audible speech could be recognized in the provided audio."
+                )
+            return transcript
+    except httpx.RequestError as re:
+        raise HTTPException(
+            status_code=502,
+            detail=f"OPENAI_NETWORK_ERROR: Failed to connect to OpenAI API: {str(re)}"
+        )
+
 def transcribe_audio_v2(audio_bytes: bytes, language_code: str, request_id: str = "") -> str:
     """
-    Calls Google Cloud Speech-to-Text V2 Recognize with:
-    - model chirp_2
-    - location asia-southeast1
-    - language_code (hi-IN or en-IN)
-    - synchronous recognition
-    
-    If Chirp 2 is not entitled for the GCP project or credentials are not configured,
-    reports the exact blocker without silent fallback.
+    Calls configured speech provider:
+    - If STT_PROVIDER is 'openai' or OPENAI_API_KEY is configured, calls OpenAI Whisper.
+    - Otherwise calls Google Cloud Speech-to-Text V2 Recognize (chirp_2).
     """
     if language_code not in ["hi-IN", "en-IN"]:
         raise HTTPException(status_code=400, detail=f"Unsupported language code '{language_code}'. Must be 'hi-IN' or 'en-IN'.")
 
     validate_wav_audio(audio_bytes)
+
+    # Route to OpenAI Whisper if requested
+    if settings.STT_PROVIDER.lower() == "openai" or (settings.OPENAI_API_KEY and not settings.GCP_PROJECT_ID):
+        return transcribe_audio_openai(audio_bytes, language_code)
 
     # Check GCP project configuration
     if not settings.GCP_PROJECT_ID:

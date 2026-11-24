@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: hakdaar-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: STT_PROVIDER
+        value: openai
+      - key: STT_MODEL
+        value: whisper-1
+      - key: GEMINI_MODEL_ID
+        value: gemini-3.8-flash
+      - key: MAX_AUDIO_SECONDS
+        value: 55
+      - key: MAX_AUDIO_BYTES
+        value: 1800000
